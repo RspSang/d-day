@@ -1,7 +1,13 @@
 import Form from "./Components/Form";
+import List from "./Components/List";
 
 function App() {
-  return <Form />;
+  return (
+    <>
+      <Form />
+      <List />
+    </>
+  );
 }
 
 export default App;
