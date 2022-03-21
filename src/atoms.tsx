@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export interface IDo {
   text: string;
-  when: string;
+  when: Date;
   id: number;
 }
 
