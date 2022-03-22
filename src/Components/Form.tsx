@@ -1,6 +1,53 @@
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { doState } from "../atoms";
+
+const InputContainer = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Do = styled.input`
+  height: 4rem;
+  width: 30rem;
+  border: 2px solid black;
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  padding: 0 1.2rem;
+  :focus {
+    outline: none;
+    border-color: #9147ff;
+  }
+`;
+
+const Day = styled.input`
+  margin-left: 0.5rem;
+  height: 4rem;
+  width: 10rem;
+  border: 2px solid black;
+  border-radius: 1rem;
+  font-size: 1rem;
+  padding: 0 0.6rem;
+  :focus {
+    outline: none;
+    border-color: #9147ff;
+  }
+`;
+
+const Btn = styled.button`
+  margin-left: 0.5rem;
+  padding: 0.8em 3em;
+  height: 4rem;
+  background-color: #9147ff;
+  border-radius: 1rem;
+  font-size: 1rem;
+  :active {
+    transform: translateY(5px);
+  }
+`;
 
 interface IForm {
   Do: string;
@@ -20,19 +67,18 @@ function Form() {
   };
 
   return (
-    <div>
+    <InputContainer>
       <form onSubmit={handleSubmit(handleValid)}>
-        <input
-          {...register("Do", { required: "필수 항목입니다 입력해주세요" })}
+        <Do
+          id="Do"
+          required={true}
+          {...register("Do")}
           placeholder="Write a to do"
-        ></input>
-        <input
-          type="date"
-          {...register("When", { required: "필수 항목입니다 입력해주세요" })}
-        ></input>
-        <button>입력</button>
+        ></Do>
+        <Day type="date" required={true} {...register("When")}></Day>
+        <Btn>입력</Btn>
       </form>
-    </div>
+    </InputContainer>
   );
 }
 
