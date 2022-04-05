@@ -1,5 +1,29 @@
 import { useRecoilValue } from "recoil";
 import { doState } from "../atoms";
+import styled from "styled-components";
+import { theme } from "../theme";
+import React from "react";
+
+const ListContainer = styled.div`
+  width: 49rem;
+  margin-top: 2rem;
+`;
+
+const List = styled.div`
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  color: ${(props) => props.theme.white.lighter};
+  background-color: #9147ff;
+  border-radius: 0.8rem;
+  margin-top: 1rem;
+`;
+
+const ListDelete = styled.div`
+  position: absolute;
+  margin-left: 50%;
+  cursor: pointer;
+`;
 
 const countDayFN = (toDate: Date) => {
   const now = new Date();
@@ -15,18 +39,21 @@ const countDayFN = (toDate: Date) => {
   };
 };
 
-function List() {
+function Lists() {
   const lists = useRecoilValue(doState);
+  const onClick = (event: React.MouseEvent<HTMLSpanElement>) => {
+    console.log(event);
+  };
   return (
-    <div>
-      {lists?.map((list) => (
-        <div key={list.id}>
+    <ListContainer>
+      {lists?.map((list: any) => (
+        <List key={list.id}>
           {list.text}
-          {countDayFN(list.when).days}일
-        </div>
+          {list.when}일<ListDelete onClick={onClick}>x</ListDelete>
+        </List>
       ))}
-    </div>
+    </ListContainer>
   );
 }
 
-export default List;
+export default Lists;

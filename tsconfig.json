@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "../playground/play.js"  ]
 }

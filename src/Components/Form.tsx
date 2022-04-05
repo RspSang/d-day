@@ -1,14 +1,10 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { doState } from "../atoms";
+import { useEffect } from "react";
 
-const InputContainer = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+const FormContainer = styled.form``;
 
 const Do = styled.input`
   height: 4rem;
@@ -55,7 +51,7 @@ interface IForm {
 }
 
 function Form() {
-  const setDos = useSetRecoilState(doState);
+  const [dos, setDos] = useRecoilState(doState);
   const { register, handleSubmit, setValue } = useForm<IForm>();
   const handleValid = (data: IForm) => {
     setDos((oldToDos) => [
@@ -63,22 +59,23 @@ function Form() {
       ...oldToDos,
     ]);
     setValue("Do", "");
-    setValue("When", new Date());
+    // setValue("When", new Date());
   };
+  useEffect(() => {
+    localStorage.setItem("Do", JSON.stringify(dos));
+  }, [dos]);
 
   return (
-    <InputContainer>
-      <form onSubmit={handleSubmit(handleValid)}>
-        <Do
-          id="Do"
-          required={true}
-          {...register("Do")}
-          placeholder="Write a to do"
-        ></Do>
-        <Day type="date" required={true} {...register("When")}></Day>
-        <Btn>입력</Btn>
-      </form>
-    </InputContainer>
+    <FormContainer onSubmit={handleSubmit(handleValid)}>
+      <Do
+        id="Do"
+        required={true}
+        {...register("Do")}
+        placeholder="Write a to do"
+      ></Do>
+      <Day type="date" required={true} {...register("When")}></Day>
+      <Btn>입력</Btn>
+    </FormContainer>
   );
 }
 
