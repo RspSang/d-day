@@ -10,5 +10,5 @@ export interface IDo {
 export const doState = atom<IDo[]>({
   key: "Do",
   default: [],
-  effects: [localStorageEffect("toDos")],
+  effects: [localStorageEffect("Do")],
 });

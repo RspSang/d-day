@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { doState } from "../atoms";
-import { useEffect } from "react";
 
 const FormContainer = styled.form``;
 
@@ -50,20 +49,24 @@ interface IForm {
   When: Date;
 }
 
+let input: object[] = [];
+let id: number = 0;
+
 function Form() {
-  const [dos, setDos] = useRecoilState(doState);
+  // const setDos = useSetRecoilState(doState);
   const { register, handleSubmit, setValue } = useForm<IForm>();
   const handleValid = (data: IForm) => {
-    setDos((oldToDos) => [
-      { text: data.Do, when: data.When, id: Date.now() },
-      ...oldToDos,
-    ]);
+    // setDos((oldToDos) => [
+    //   { text: data.Do, when: data.When, id: Date.now() },
+    //   ...oldToDos,
+    // ]);
+
+    input.push({ id, text: data.Do, when: data.When });
+    localStorage.setItem("toDos", JSON.stringify(input));
+    id++;
     setValue("Do", "");
     // setValue("When", new Date());
   };
-  useEffect(() => {
-    localStorage.setItem("Do", JSON.stringify(dos));
-  }, [dos]);
 
   return (
     <FormContainer onSubmit={handleSubmit(handleValid)}>

@@ -40,7 +40,9 @@ const countDayFN = (toDate: Date) => {
 };
 
 function Lists() {
-  const lists = useRecoilValue(doState);
+  // const lists = useRecoilValue(doState);
+  const output = localStorage.getItem("toDos"); 
+  const lists = output ? JSON.parse(output) : [];
   const onClick = (event: React.MouseEvent<HTMLSpanElement>) => {
     console.log(event);
   };
